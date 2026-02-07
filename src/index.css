@@ -101,3 +101,52 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.landing {
+  --s: 80px; /* control the size */
+  --c1: #0ea4e956;
+  --c2: #000c18;
+
+  --_s: calc(2 * var(--s)) calc(2 * var(--s));
+  --_g: var(--_s) conic-gradient(at 20% 20%, #0000 75%, var(--c1) 0);
+  --_p: var(--_s) conic-gradient(at 10% 10%, #0000 75%, var(--c2) 0);
+  background: calc(0.9 * var(--s)) calc(0.9 * var(--s)) / var(--_p),
+    calc(-0.05 * var(--s)) calc(-0.05 * var(--s)) / var(--_p),
+    calc(0.8 * var(--s)) calc(0.8 * var(--s)) / var(--_g),
+    calc(-0.15 * var(--s)) calc(-0.15 * var(--s)) / var(--_g),
+    conic-gradient(from 90deg at 0% 0%, var(--c2) 25%, var(--c1) 0) 0 0 /
+      var(--s) var(--s);
+  animation: m 3s infinite;
+}
+@keyframes m {
+  0% {
+    background-position: calc(0.9 * var(--s)) calc(0.9 * var(--s)),
+      calc(-0.05 * var(--s)) calc(-0.05 * var(--s)),
+      calc(0.8 * var(--s)) calc(0.8 * var(--s)),
+      calc(-0.15 * var(--s)) calc(-0.15 * var(--s)), 0 0;
+  }
+  25% {
+    background-position: calc(1.9 * var(--s)) calc(0.9 * var(--s)),
+      calc(-1.05 * var(--s)) calc(-0.05 * var(--s)),
+      calc(1.8 * var(--s)) calc(0.8 * var(--s)),
+      calc(-1.15 * var(--s)) calc(-0.15 * var(--s)), 0 0;
+  }
+  50% {
+    background-position: calc(1.9 * var(--s)) calc(-0.05 * var(--s)),
+      calc(-1.05 * var(--s)) calc(0.9 * var(--s)),
+      calc(1.8 * var(--s)) calc(-0.15 * var(--s)),
+      calc(-1.15 * var(--s)) calc(0.8 * var(--s)), 0 0;
+  }
+  75% {
+    background-position: calc(2.9 * var(--s)) calc(-0.05 * var(--s)),
+      calc(-2.05 * var(--s)) calc(0.9 * var(--s)),
+      calc(2.8 * var(--s)) calc(-0.15 * var(--s)),
+      calc(-2.15 * var(--s)) calc(0.8 * var(--s)), 0 0;
+  }
+  100% {
+    background-position: calc(2.9 * var(--s)) calc(-1.05 * var(--s)),
+      calc(-2.05 * var(--s)) calc(1.9 * var(--s)),
+      calc(2.8 * var(--s)) calc(-1.15 * var(--s)),
+      calc(-2.15 * var(--s)) calc(1.8 * var(--s)), 0 0;
+  }
+}

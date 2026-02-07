@@ -1,3 +1,93 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .wysiwyg {
+    @apply prose prose-lg max-w-none;
+  }
+}
+
+:root {
+  /* General Colors */
+  --general-primary: #000000;
+  --general-secondary: #464646;
+  --general-background: #ffffff;
+  --general-container: #ffffff;
+  --general-highlight: #b9b9b9;
+  --general-icon: #100067;
+  --general-label: #818181;
+  --general-text: #333333;
+  --general-link: #3490dc;
+  --general-border: #949494;
+
+  /* Header Colors*/
+  --header-primary: #fefefe;
+  --header-secondary: #f6f6f6;
+  --header-text: #333333;
+  --header-hover: #3490dc;
+  --header-decoration: #949494;
+
+  /* Footer Colors*/
+  --footer-primary: #fefefe;
+  --footer-secondary: #f6f6f6;
+  --footer-banner: #000000;
+  --footer-text: #333333;
+  --footer-hover: #3490dc;
+  --footer-decoration: #949494;
+
+  color-scheme: light dark;
+
+  /* Primary Button */
+  --button-primary-background: #01C311;
+  --button-primary-color: #ffffff;
+  --button-primary-hoverbackground: #00d812;
+  --button-primary-hovercolor: #ffffff;
+
+  /* Secondary Button */
+  --button-secondary-background: #7d0000;
+  --button-secondary-color: #ffffff;
+  --button-secondary-hoverbackground: #a80000;
+  --button-secondary-hovercolor: #ffffff;
+
+  /* Tertiary Button */
+  --button-tertiary-background: #ffffff;
+  --button-tertiary-color: #404040;
+  --button-tertiary-hoverbackground: #e0e0e0;
+  --button-tertiary-hovercolor: #404040;
+
+  /* Selected Button */
+  --button-selected-background: #007BFF;
+  --button-selected-color: #ffffff;
+  --button-selected-hoverbackground: #0056b3;
+  --button-selected-hovercolor: #ffffff;
+  
+  /* Unselected Button */
+  --button-unselected-background: #F4F4F4;
+  --button-unselected-color: #B0B0B0;
+  --button-unselected-hoverbackground: #D9D9D9;
+  --button-unselected-hovercolor: #B0B0B0;
+
+  /* Shop Button */
+  --button-shop-background: #FF5733;
+  --button-shop-color: #ffffff;
+  --button-shop-hoverbackground: #ff7f47;
+  --button-shop-hovercolor: #ffffff;
+
+  /* Notification Colors */
+  --error-color: #f93c3c;
+  --error-text: #ffffff;
+
+  --warn-color: #fdfa4b;
+  --warn-text: #ffffff;
+
+  --info-color: #0b81ff;
+  --info-text: #ffffff;
+
+  --success-color: #6bff36;
+  --success-text: #ffffff;
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',

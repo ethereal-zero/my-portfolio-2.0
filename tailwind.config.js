@@ -8,11 +8,18 @@ module.exports = {
     },
     extend: {
       colors: {
-        'background': '#ffffff',
-        'accent': '##ae448',
-        'primary': '#000000',
-        'secondary': '#262527',
+        "brand-blue-light": "#0D96D5",
 
+        'background': "#081028",
+        "background-1": "#071329",
+        "background-2": "#0A1B2E",
+
+        'accent': "#22D3EE",
+        "accent-2": "#60A5FA",
+        "accent-3": "#A78BFA",
+
+        primary: "#E6EDF8",
+        secondary: "#94A3B8",
         // General Colors
         'general-primary': 'var(--general-primary)',
         'general-secondary': 'var(--general-secondary)',
@@ -90,6 +97,6 @@ module.exports = {
   plugins: [
     require("@tailwindcss/typography"),
     require("@tailwindcss/forms")({ strategy: "class" }),
-    require("@tailwindcss/line-clamp"),
+    // require("@tailwindcss/line-clamp"),
   ],
 }

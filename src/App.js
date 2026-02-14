@@ -45,18 +45,38 @@ function App() {
   return (
     <ThemeProvider className="relative">
       <BrowserRouter>
-        <Toaster position="top-right" toastOptions={{ duration: 3000 }} />
-        <section className="relative flex min-h-dvh flex-col bg-black/50 z-10">
-          <NavHeader />
-          <Routes>
-            {pageRoutes.map(({ path, Component }) => (
-              <Route key={path} path={path} element={<Component />} />
-            ))}
+        <div className="relative min-h-dvh overflow-hidden">
+          {/* Animated blob background */}
+          <div aria-hidden className="blob-bg pointer-events-none fixed inset-0 overflow-hidden">
+            <div className="orbit orbit-1">
+              <div className="blob blob-1" />
+            </div>
 
-            {/* fallback */}
-            <Route path="*" element={<Navigate to="/" replace />} />
-          </Routes>
-        </section>
+            <div className="orbit orbit-2">
+              <div className="blob blob-2" />
+            </div>
+
+            <div className="orbit orbit-3">
+              <div className="blob blob-3" />
+            </div>
+
+            <div className="blob-vignette" />
+          </div>
+
+          <Toaster position="top-right" toastOptions={{ duration: 3000 }} />
+
+          <section className="relative z-10 flex min-h-dvh flex-col bg-transaparent">
+            <NavHeader />
+            <Routes>
+              {pageRoutes.map(({ path, Component }) => (
+                <Route key={path} path={path} element={<Component />} />
+              ))}
+
+              {/* fallback */}
+              <Route path="*" element={<Navigate to="/" replace />} />
+            </Routes>
+          </section>
+        </div>
       </BrowserRouter>
     </ThemeProvider>
   );

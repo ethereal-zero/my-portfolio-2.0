@@ -45,7 +45,7 @@ function App() {
   return (
     <ThemeProvider className="relative">
       <BrowserRouter>
-        <div className="relative min-h-dvh overflow-hidden">
+        <div className="relative min-h-dvh overflow-hidden bg-background/50">
           {/* Animated blob background */}
           <div aria-hidden className="blob-bg pointer-events-none fixed inset-0 overflow-hidden">
             <div className="orbit orbit-1">
@@ -65,7 +65,7 @@ function App() {
 
           <Toaster position="top-right" toastOptions={{ duration: 3000 }} />
 
-          <section className="relative z-10 flex min-h-dvh flex-col bg-transaparent">
+          <section className="relative z-10 flex w-full h-dvh flex-col bg-transaparent overflow-y-auto">
             <NavHeader />
             <Routes>
               {pageRoutes.map(({ path, Component }) => (

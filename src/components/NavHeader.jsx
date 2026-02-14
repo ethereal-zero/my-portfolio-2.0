@@ -6,7 +6,7 @@ export default function NavHeader() {
     { to: '/', label: 'Home', end: true },
     { to: '/about', label: 'About' },
     { to: '/projects', label: 'Projects' },
-    { to: '/contact', label: 'Contact' },
+    // { to: '/contact', label: 'Contact' },
   ];
 
   return (

@@ -1,109 +1,156 @@
-import React, { useEffect } from "react";
-import "@fontsource/inter/400.css";
-import "@fontsource/inter/700.css";
+import React, { useEffect, useMemo, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { supabase } from '../lib/supabase/client.ts'
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faAngleRight } from "@fortawesome/free-solid-svg-icons";
-import "react-responsive-carousel/lib/styles/carousel.min.css";
+const STORAGE_BUCKET = 'assets';
+const STORAGE_FOLDER = 'projects';
+const FALLBACK_IMG = '/placeholder-project.jpg';
 
-import AOS from "aos";
-import "aos/dist/aos.css";
+function resolveImageUrl(imagePath) {
+  if (!imagePath) return FALLBACK_IMG;
+  if (imagePath.startsWith('http://') || imagePath.startsWith('https://')) {
+    return imagePath;
+  }
 
-function HeroSection({ setSection }) {
-  useEffect(() => {
-    AOS.init({
-      once: true,
-      duration: 500,
-    });
-  }, []);
+  const normalized = imagePath.startsWith(`${STORAGE_FOLDER}/`)
+    ? imagePath
+    : `${STORAGE_FOLDER}/${imagePath}`;
 
-  const handleOpenCV = () => {
-    window.open(
-      "https://docs.google.com/document/d/1eTkUFzqG1-aEnrIzEMl5FZczfqo8HToZ/edit?usp=sharing&ouid=117003138271770141554&rtpof=true&sd=true",
-      "_blank",
-      "noopener,noreferrer"
-    );
-  };
-
-  return (
-    <>
-      {/* anchor target */}
-      <div id="home" className="w-full" />
-
-      <section
-        className="w-full min-h-screen relative p-4 border-b-4 border-accent flex items-center justify-center"
-        data-aos="fade-up"
-      >
-        <div className="w-full h-full flex justify-center flex-col items-center mx-auto max-w-screen-xl">
-          <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-2 lg:grid-cols-3">
-            <div
-              className="col-span-1 p-4 flex flex-col items-center justify-center"
-              data-aos="fade-right"
-              data-aos-delay="300"
-            >
-              <div className="overflow-hidden rounded-full aspect-square bg-brand-blue-light border-4 z-10 glow-effect">
-                {/* Put image in /public then use /ako_grad2.jpg */}
-                <img
-                  src="profile/ako_grad.jpg"
-                  alt="Kenneth Candia"
-                  className="h-full w-full object-cover"
-                />
-              </div>
-            </div>
-
-            <div className="col-span-1 lg:col-span-2 flex flex-col justify-center p-4 max-w-[800px] font-[Inter]">
-              <span
-                className="w-full text-brand-blue-light font-bold text-xl sm:text-2xl lg:text-3xl text-center md:text-left"
-                data-aos="fade-right"
-                data-aos-delay="500"
-              >
-                Hello!
-              </span>
-
-              <span
-                className="w-full text-white font-bold text-2xl sm:text-4xl lg:text-6xl text-center md:text-left md:indent-4"
-                data-aos="fade-right"
-                data-aos-delay="650"
-              >
-                I&apos;m Kenneth Candia
-              </span>
-
-              <span
-                className="w-full text-gray-400 font-semibold text-lg sm:text-2xl lg:text-3xl text-center md:text-left md:indent-8"
-                data-aos="fade-right"
-                data-aos-delay="800"
-              >
-                Software Developer
-              </span>
-
-              <div
-                className="w-full text-white font-semibold text-lg md:text-xl text-center md:text-right pt-10"
-                data-aos="fade-up"
-                data-aos-delay="1000"
-              >
-                <button
-                  type="button"
-                  className="px-6 py-2 bg-accent rounded-xl mr-2"
-                  onClick={handleOpenCV}
-                >
-                  Show CV
-                </button>
-
-                <button
-                  type="button"
-                  className="px-6 py-2 border-2 border-accent rounded-xl"
-                  onClick={() => setSection?.("about")}
-                >
-                  See More
-                  <FontAwesomeIcon icon={faAngleRight} className="pl-2" />
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-    </>
-  );
+  const { data } = supabase.storage.from(STORAGE_BUCKET).getPublicUrl(normalized);
+  return data?.publicUrl || FALLBACK_IMG;
 }
 
-export default HeroSection;
+export default function ProjectSection() {
+  const navigate = useNavigate();
+
+  const [projects, setProjects] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
+
+  useEffect(() => {
+    let active = true;
+
+    async function fetchProjects() {
+      setLoading(true);
+      setError('');
+
+      const { data, error } = await supabase
+        .from('projects')
+        .select('id, title, description, tags, image_path')
+        // .eq('is_active', true)
+        .order('title', { ascending: true });
+
+      if (!active) return;
+
+      if (error) {
+        setError(error.message || 'Failed to load projects');
+        setProjects([]);
+      } else {
+        setProjects(data || []);
+      }
+
+      setLoading(false);
+    }
+
+    fetchProjects();
+    return () => {
+      active = false;
+    };
+  }, []);
+
+  const list = useMemo(
+    () =>
+      projects.map((p) => ({
+        ...p,
+        imageUrl: resolveImageUrl(p.image_path),
+      })),
+    [projects]
+  );
+
+  return (
+    <section className="w-full px-6 py-6 text-slate-100">
+      <div className="mb-6 flex items-start justify-between gap-4">
+        <div>
+          <h1 className="text-5xl font-bold tracking-tight">Projects</h1>
+        </div>
+      </div>
+
+      {loading && (
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {[1, 2, 3].map((n) => (
+            <div
+              key={n}
+              className="overflow-hidden rounded-3xl border border-slate-800 bg-slate-900/60 animate-pulse"
+            >
+              <div className="h-72 bg-slate-800/70" />
+              <div className="space-y-4 p-6">
+                <div className="h-8 w-48 rounded bg-slate-700" />
+                <div className="h-5 w-full rounded bg-slate-800" />
+                <div className="h-5 w-4/5 rounded bg-slate-800" />
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {!loading && error && (
+        <div className="rounded-2xl border border-red-500/30 bg-red-500/10 p-4 text-red-200">
+          {error}
+        </div>
+      )}
+
+      {!loading && !error && list.length === 0 && (
+        <div className="rounded-2xl border border-slate-700 bg-slate-900/50 p-6 text-slate-300 text-center">
+          No projects found.
+        </div>
+      )}
+
+      {!loading && !error && list.length > 0 && (
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {list.map((project) => (
+            <article
+              key={project.id}
+              className="overflow-hidden rounded-3xl border border-slate-800 bg-slate-900/60 shadow-lg"
+            >
+              <div className="relative h-72 overflow-hidden">
+                <img
+                  src={project.imageUrl}
+                  alt={project.title}
+                  className="h-full w-full object-cover"
+                  loading="lazy"
+                />
+                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
+
+                <span className="absolute bottom-4 left-4 rounded-full bg-black/65 px-4 py-1 text-sm font-medium">
+                  {project.category || 'Project'}
+                </span>
+
+                <button
+                  type="button"
+                  className="absolute bottom-4 right-4 rounded-full bg-emerald-500/20 px-4 py-1 text-sm font-medium text-emerald-300 backdrop-blur hover:bg-emerald-500/30 transition"
+                  onClick={() => navigate(project.path || '/')}
+                >
+                  Play
+                </button>
+              </div>
+
+              <div className="p-6">
+                <h3 className="text-4xl font-bold leading-tight">{project.title}</h3>
+                <p className="mt-3 text-xl leading-relaxed text-slate-300">
+                  {project.description}
+                </p>
+
+                <div className="mt-6 flex items-center gap-4">
+                  <span className="text-slate-400 text-2xl">Path</span>
+                  <code className="rounded-lg bg-slate-800/70 px-3 py-2 text-2xl text-slate-200">
+                    {project.path || '/'}
+                  </code>
+                </div>
+              </div>
+            </article>
+          ))}
+        </div>
+      )}
+    </section>
+  );
+}

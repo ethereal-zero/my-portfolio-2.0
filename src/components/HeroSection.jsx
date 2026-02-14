@@ -31,7 +31,7 @@ function HeroSection({ setSection }) {
       <div id="home" className="w-full" />
 
       <section
-        className="w-full min-h-screen relative p-4 border-b-4 border-accent flex items-center justify-center"
+        className="w-full min-h-screen relative p-4 border-b-4 border-accent flex items-center justify-center -mt-16"
         data-aos="fade-up"
       >
         <div className="w-full h-full flex justify-center flex-col items-center mx-auto max-w-screen-xl">

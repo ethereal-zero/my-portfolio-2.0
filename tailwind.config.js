@@ -14,7 +14,7 @@ module.exports = {
         "background-1": "#071329",
         "background-2": "#0A1B2E",
 
-        'accent': "#22D3EE",
+        'accent': "#5ae9ff",
         "accent-2": "#60A5FA",
         "accent-3": "#A78BFA",
 

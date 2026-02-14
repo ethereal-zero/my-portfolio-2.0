@@ -254,7 +254,7 @@ code {
     radial-gradient(
       120% 120% at 50% 50%,
       transparent 35%,
-      color-mix(in srgb, var(--c-bg) 72%, transparent) 100%
+      color-mix(in srgb, var(--c-bg) 100%, transparent) 100%
     );
 }
 

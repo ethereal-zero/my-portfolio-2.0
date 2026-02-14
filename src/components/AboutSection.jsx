@@ -173,12 +173,12 @@ export default function AboutPage() {
                 View Projects
               </NavLink>
 
-              <a
+              <span
                 onClick={handleOpenCV}
                 className="rounded-full bg-emerald-500/20 px-4 py-2 text-xs font-semibold text-emerald-300 hover:bg-emerald-500/30 transition sm:text-sm"
               >
                 Download CV
-              </a>
+              </span>
             </div>
           </div>
         </article>

@@ -1,4 +1,5 @@
 import React from "react";
+import { NavLink } from 'react-router-dom';
 
 const aboutContent = {
   headline: "About",
@@ -51,6 +52,14 @@ const techStack = [
   "Git",
   "Figma",
 ];
+
+  const handleOpenCV = () => {
+    window.open(
+      "https://docs.google.com/document/d/1eTkUFzqG1-aEnrIzEMl5FZczfqo8HToZ/edit?usp=sharing&ouid=117003138271770141554&rtpof=true&sd=true",
+      "_blank",
+      "noopener,noreferrer"
+    );
+  };
 
 export default function AboutPage() {
   return (
@@ -157,15 +166,15 @@ export default function AboutPage() {
 
             {/* Optional CTA row */}
             <div className="mt-5 flex flex-wrap items-center gap-3">
-              <a
-                href="/"
+              <NavLink
+                to="/projects"
                 className="rounded-full border border-slate-700 bg-white/5 px-4 py-2 text-xs font-semibold text-slate-100 hover:bg-white/10 transition sm:text-sm"
               >
                 View Projects
-              </a>
+              </NavLink>
 
               <a
-                href="/"
+                onClick={handleOpenCV}
                 className="rounded-full bg-emerald-500/20 px-4 py-2 text-xs font-semibold text-emerald-300 hover:bg-emerald-500/30 transition sm:text-sm"
               >
                 Download CV

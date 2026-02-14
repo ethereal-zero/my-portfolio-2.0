@@ -61,7 +61,7 @@ function HeroSection({ setSection }) {
               </span>
 
               <span
-                className="w-full text-white font-bold text-2xl sm:text-4xl lg:text-6xl text-center md:text-left md:indent-4"
+                className="w-full text-white font-bold text-2xl sm:text-4xl lg:text-6xl text-center md:text-left"
                 data-aos="fade-right"
                 data-aos-delay="650"
               >
@@ -69,7 +69,7 @@ function HeroSection({ setSection }) {
               </span>
 
               <span
-                className="w-full text-gray-400 font-semibold text-lg sm:text-2xl lg:text-3xl text-center md:text-left md:indent-8"
+                className="w-full text-gray-400 font-semibold text-lg sm:text-2xl lg:text-3xl text-center md:text-left"
                 data-aos="fade-right"
                 data-aos-delay="800"
               >
@@ -77,7 +77,7 @@ function HeroSection({ setSection }) {
               </span>
 
               <div
-                className="w-full text-white font-semibold text-lg md:text-xl text-center md:text-right pt-10"
+                className="w-full text-white font-semibold text-lg md:text-xl text-center md:text-left pt-10"
                 data-aos="fade-up"
                 data-aos-delay="1000"
               >

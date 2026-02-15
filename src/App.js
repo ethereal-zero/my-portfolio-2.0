@@ -67,7 +67,7 @@ function App() {
 
           <section className="relative z-10 flex w-full h-dvh flex-col bg-transaparent overflow-y-auto">
             <NavHeader />
-            <Routes>
+            <Routes className="min-h-screen">
               {pageRoutes.map(({ path, Component }) => (
                 <Route key={path} path={path} element={<Component />} />
               ))}

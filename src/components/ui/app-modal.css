@@ -1,0 +1,72 @@
+/* =========================
+   Animation
+========================= */
+@keyframes appModalOverlayIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes appModalOverlayOut {
+  from { opacity: 1; }
+  to   { opacity: 0; }
+}
+
+@keyframes appModalContentIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -48%) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+@keyframes appModalContentOut {
+  from {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translate(-50%, -48%) scale(0.97);
+  }
+}
+
+.app-modal-overlay[data-state="open"] {
+  animation: appModalOverlayIn 220ms ease-out;
+}
+.app-modal-overlay[data-state="closed"] {
+  animation: appModalOverlayOut 180ms ease-in;
+}
+.app-modal-content[data-state="open"] {
+  animation: appModalContentIn 240ms ease-out;
+}
+.app-modal-content[data-state="closed"] {
+  animation: appModalContentOut 180ms ease-in;
+}
+
+/* =========================
+   Sizing
+   Mobile: full 80vh
+   Desktop: keep your nice wide look
+========================= */
+.app-modal-content {
+  height: 80vh;
+  max-height: 80vh;
+}
+
+@media (min-width: 1024px) {
+  .app-modal-content {
+    height: auto;
+    max-height: min(80vw, 92vh);
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .app-modal-overlay[data-state="open"],
+  .app-modal-overlay[data-state="closed"],
+  .app-modal-content[data-state="open"],
+  .app-modal-content[data-state="closed"] {
+    animation: none !important;
+  }
+}

@@ -78,7 +78,7 @@ export default function AboutPage() {
 
       {/* Intro + Focus */}
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
-        <article className="overflow-hidden rounded-3xl border border-slate-800 bg-slate-900/60 shadow-lg">
+        <article className="overflow-hidden rounded-xl border border-slate-800 bg-slate-900/60 shadow-lg">
           <div className="p-6">
             <h2 className="text-xl font-semibold leading-tight sm:text-2xl">
               {aboutContent.introTitle}
@@ -89,7 +89,7 @@ export default function AboutPage() {
           </div>
         </article>
 
-        <article className="overflow-hidden rounded-3xl border border-slate-800 bg-slate-900/60 shadow-lg">
+        <article className="overflow-hidden rounded-xl border border-slate-800 bg-slate-900/60 shadow-lg">
           <div className="p-6">
             <h2 className="text-xl font-semibold leading-tight sm:text-2xl">
               {aboutContent.focusTitle}
@@ -116,7 +116,7 @@ export default function AboutPage() {
           {workExperience.map((w) => (
             <article
               key={`${w.role}-${w.company}`}
-              className="overflow-hidden rounded-3xl border border-slate-800 bg-slate-900/60 shadow-lg"
+              className="overflow-hidden rounded-xl border border-slate-800 bg-slate-900/60 shadow-lg"
             >
               <div className="p-6">
                 <h3 className="text-lg font-semibold leading-tight sm:text-xl">
@@ -151,7 +151,7 @@ export default function AboutPage() {
           </p>
         </div>
 
-        <article className="overflow-hidden rounded-3xl border border-slate-800 bg-slate-900/60 shadow-lg">
+        <article className="overflow-hidden rounded-xl border border-slate-800 bg-slate-900/60 shadow-lg">
           <div className="p-6">
             <div className="flex flex-wrap gap-2.5">
               {techStack.map((t) => (

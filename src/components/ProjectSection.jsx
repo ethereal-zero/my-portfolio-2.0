@@ -22,7 +22,7 @@ const PROJECTS = [
     {
     id: 2,
     title: "Project MP",
-    description: "Project FH is a secure, scalable sports video platform built to deliver authorized live and on-demand fight content with dependable performance. Developed with Vue on the frontend and Laravel on the backend, the platform combines a fast, responsive user experience with a robust, maintainable application architecture. Live streaming is powered by Vimeo for reliable broadcast delivery, while DigitalOcean Spaces is used for efficient, scalable media storage. With controlled access, protected content workflows, and stable playback across devices, Project FH is designed to support growing audiences without compromising security, quality, or operational control.",
+    description: "Project MP is a private performance-focused platform built to support muscle growth goals through high-quality formulations and a reliable digital experience. With strong quality standards, controlled access, and consistent delivery, Project MP is designed to provide a trusted and seamless user journey.",
     tags: [  "Vue.js", "Laravel", "Provesouurce", "Omnisend", "NDA Protected"],
     images: [
       "projects/project_mp_1.png",

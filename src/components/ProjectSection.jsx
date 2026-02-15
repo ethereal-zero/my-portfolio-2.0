@@ -2,14 +2,14 @@ import React, { useMemo, useState } from "react";
 import AppModal from "./ui/AppModal";
 import ImageSlider from "./ui/ImageSlider";
 
-const FALLBACK_IMG = "/placeholder-project.jpg";
+const FALLBACK_IMG = "/placeholder-img.png";
 
 const PROJECTS = [
   {
     id: 1,
     title: "Project FH",
-    description: "A secure, scalable video platform for authorized live and on-demand sports content, built for controlled access and reliable playback.",
-    tags: [  "Vuejs", "Laravel", "Vimeo", "Digital Ocean Space", "NDA Protected"],
+    description: "Project FH is a secure, scalable sports video platform built to deliver authorized live and on-demand fight content with dependable performance. Developed with Vue on the frontend and Laravel on the backend, the platform combines a fast, responsive user experience with a robust, maintainable application architecture. Live streaming is powered by Vimeo for reliable broadcast delivery, while DigitalOcean Spaces is used for efficient, scalable media storage. With controlled access, protected content workflows, and stable playback across devices, Project FH is designed to support growing audiences without compromising security, quality, or operational control.",
+    tags: [  "Vue.js", "Laravel", "Vimeo", "Digital Ocean Space", "NDA Protected"],
     images: [
       "projects/project_fh_1.png",
       "projects/project_fh_2.png",
@@ -19,8 +19,22 @@ const PROJECTS = [
     ],
     category: "Streaming",
   },
-  {
+    {
     id: 2,
+    title: "Project MP",
+    description: "Project FH is a secure, scalable sports video platform built to deliver authorized live and on-demand fight content with dependable performance. Developed with Vue on the frontend and Laravel on the backend, the platform combines a fast, responsive user experience with a robust, maintainable application architecture. Live streaming is powered by Vimeo for reliable broadcast delivery, while DigitalOcean Spaces is used for efficient, scalable media storage. With controlled access, protected content workflows, and stable playback across devices, Project FH is designed to support growing audiences without compromising security, quality, or operational control.",
+    tags: [  "Vue.js", "Laravel", "Provesouurce", "Omnisend", "NDA Protected"],
+    images: [
+      "projects/project_mp_1.png",
+      "projects/project_mp_2.png",
+      "projects/project_mp_3.png",
+      "projects/project_mp_4.png",
+      "projects/project_mp_5.png",
+    ],
+    category: "E-commerce",
+  },
+  {
+    id: 10,
     title: "Task Tracker Pro",
     description: "Task manager with filtering, priorities, and drag-and-drop sorting.",
     tags: ["React", "Productivity", "DnD"],
@@ -92,7 +106,7 @@ export default function ProjectSection() {
   const [selectedProject, setSelectedProject] = useState(null);
 
   const openProject = (project) => setSelectedProject(project);
-  
+
   return (
     <>
       <section className="w-full px-6 py-6 text-slate-100">
@@ -146,7 +160,7 @@ export default function ProjectSection() {
 
                 <div className="p-6">
                   <h3 className="text-lg font-semibold leading-tight sm:text-xl">{project.title}</h3>
-                  <p className="mt-2 text-sm leading-relaxed text-slate-300 sm:text-base">
+                  <p className="mt-2 text-sm leading-relaxed text-slate-300 sm:text-base line-clamp-2">
                     {project.description}
                   </p>
 
@@ -200,7 +214,7 @@ export default function ProjectSection() {
         {selectedProject && (
           <div className="space-y-4">
             <ImageSlider images={selectedProject.images} fit="cover" />
-            <p className="text-sm text-slate-300 sm:text-base">{selectedProject.description}</p>
+            <p className="text-sm text-slate-300 sm:text-base text-justify indent-8">{selectedProject.description}</p>
           </div>
         )}
       </AppModal>

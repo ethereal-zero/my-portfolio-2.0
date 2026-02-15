@@ -4,7 +4,7 @@ import { supabase } from "../lib/supabase/client.ts";
 
 const STORAGE_BUCKET = "assets";
 const STORAGE_FOLDER = "projects";
-const FALLBACK_IMG = "/placeholder-project.jpg";
+const FALLBACK_IMG = "/placeholder-img.png";
 
 function resolveImageUrl(imagePath) {
   if (!imagePath) return FALLBACK_IMG;

@@ -20,7 +20,7 @@ function toPublicUrl(path = "") {
   return `${base}/${clean}`;
 }
 
-const FALLBACK_IMG = toPublicUrl("placeholder-project.jpg");
+const FALLBACK_IMG = toPublicUrl("placeholder-img.png");
 
 function resolveImageSrc(url) {
   if (typeof url !== "string") return null;

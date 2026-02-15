@@ -92,10 +92,7 @@ export default function ProjectSection() {
   const [selectedProject, setSelectedProject] = useState(null);
 
   const openProject = (project) => setSelectedProject(project);
-  const handleOpenChange = (open) => {
-    if (!open) setSelectedProject(null);
-  };
-
+  
   return (
     <>
       <section className="w-full px-6 py-6 text-slate-100">

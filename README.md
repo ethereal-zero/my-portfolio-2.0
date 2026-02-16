@@ -2,7 +2,7 @@
 
 A modern, responsive developer portfolio built with React and Supabase.
 
-🌐 **Live Site:** https://my-portfolio-2-0-azure.vercel.app/
+🌐 **Live Site:** https://candia-portfolio-2-0.vercel.app/
 
 ---
 

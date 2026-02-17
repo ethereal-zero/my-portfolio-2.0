@@ -33,12 +33,9 @@ It is designed to be fast, scalable, and easy to maintain, with project content 
 
 ## Tech Stack
 
-- **Frontend:** React (Create React App)
-- **Routing:** React Router DOM
+- **Frontend:** React, Next.js, Vue
 - **Styling:** Tailwind CSS
-- **Backend / Data:** Supabase (Postgres + Storage)
-- **Icons:** Font Awesome
-- **Deployment:** Vercel
+- **Backend / Data:** Supabase, Laravel, MySQL
 
 ---
 
@@ -46,7 +43,7 @@ It is designed to be fast, scalable, and easy to maintain, with project content 
 
 Create a local env file in project root:
 
-- `.env.development.local` (for local dev)
+- `.env.local` (for local dev)
 
 ```env
 REACT_APP_SUPABASE_URL=https://YOUR_PROJECT_REF.supabase.co

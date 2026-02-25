@@ -3,6 +3,7 @@ import { Toaster } from "react-hot-toast";
 import { ThemeProvider } from "./store/ThemeStore";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import NavHeader from "./components/NavHeader";
+import Footer from "./components/Footer"
 
 // Auto-load all page components from src/pages (and subfolders)
 const pagesContext = require.context("./pages", true, /\.(js|jsx|ts|tsx)$/);
@@ -75,6 +76,7 @@ function App() {
               {/* fallback */}
               <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
+            <Footer/>
           </section>
         </div>
       </BrowserRouter>

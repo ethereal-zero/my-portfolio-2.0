@@ -177,6 +177,9 @@ code {
   isolation: isolate;
   pointer-events: none;
   overflow: hidden;
+  /* Promote to its own compositor layer once, not per-blob */
+  transform: translateZ(0);
+  contain: strict;
 }
 
 /* keep app content above blobs */
@@ -194,6 +197,7 @@ code {
   width: 0;
   height: 0;
   transform: translate(-50%, -50%);
+  /* Only animate transform — no layout or paint changes */
   will-change: transform;
 }
 
@@ -211,22 +215,22 @@ code {
   position: absolute;
   left: 0;
   top: 0;
-  border-radius: 58% 42% 63% 37% / 45% 55% 45% 55%;
-  filter: blur(50px); /* was 10px; 90 gives proper glow */
-  will-change: transform, border-radius, opacity;
+  /* Fixed border-radius — no morphing (morph animation caused constant repaints) */
+  border-radius: 50%;
+  /* Full blur on desktop */
+  filter: blur(50px);
+  /* Only transform changes — remove border-radius and opacity from will-change */
+  will-change: transform;
   mix-blend-mode: screen;
 }
 
-/* Blob colors now tied to Tailwind theme tokens */
 .blob-1 {
   --tx: 280px;
   width: 430px;
   height: 430px;
   background: color-mix(in srgb, var(--c-accent) 82%, transparent);
   transform: translateX(var(--tx));
-  animation:
-    blob-float-1 14s ease-in-out infinite,
-    blob-morph 9s ease-in-out infinite alternate;
+  animation: blob-float-1 14s ease-in-out infinite;
 }
 
 .blob-2 {
@@ -235,9 +239,7 @@ code {
   height: 440px;
   background: color-mix(in srgb, var(--c-accent-2) 78%, transparent);
   transform: translateX(var(--tx));
-  animation:
-    blob-float-2 16s ease-in-out infinite,
-    blob-morph 11s ease-in-out infinite alternate-reverse;
+  animation: blob-float-2 16s ease-in-out infinite;
 }
 
 .blob-3 {
@@ -246,9 +248,7 @@ code {
   height: 340px;
   background: color-mix(in srgb, var(--c-accent-3) 70%, transparent);
   transform: translateX(var(--tx)) translateY(120px);
-  animation:
-    blob-float-3 18s ease-in-out infinite,
-    blob-morph 10s ease-in-out infinite alternate;
+  animation: blob-float-3 18s ease-in-out infinite;
 }
 
 /* Optional readability layer (also theme-aware) */
@@ -263,84 +263,50 @@ code {
     );
 }
 
-/* ===== Animations ===== */
+/* ===== Animations — transform only, no layout/paint triggers ===== */
 @keyframes orbit-cw {
-  from {
-    transform: translate(-50%, -50%) rotate(0deg);
-  }
-  to {
-    transform: translate(-50%, -50%) rotate(360deg);
-  }
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  to   { transform: translate(-50%, -50%) rotate(360deg); }
 }
 
 @keyframes orbit-ccw {
-  from {
-    transform: translate(-50%, -50%) rotate(360deg);
-  }
-  to {
-    transform: translate(-50%, -50%) rotate(0deg);
-  }
+  from { transform: translate(-50%, -50%) rotate(360deg); }
+  to   { transform: translate(-50%, -50%) rotate(0deg); }
 }
 
 @keyframes blob-float-1 {
-  0%,
-  100% {
-    transform: translateX(var(--tx)) scale(1);
-    opacity: 0.9;
-  }
-  50% {
-    transform: translateX(calc(var(--tx) + 40px)) translateY(-24px) scale(1.08);
-    opacity: 0.75;
-  }
+  0%,100% { transform: translateX(var(--tx)) scale(1); }
+  50%     { transform: translateX(calc(var(--tx) + 40px)) translateY(-24px) scale(1.08); }
 }
 
 @keyframes blob-float-2 {
-  0%,
-  100% {
-    transform: translateX(var(--tx)) scale(1);
-    opacity: 0.85;
-  }
-  50% {
-    transform: translateX(calc(var(--tx) - 34px)) translateY(18px) scale(1.12);
-    opacity: 0.72;
-  }
+  0%,100% { transform: translateX(var(--tx)) scale(1); }
+  50%     { transform: translateX(calc(var(--tx) - 34px)) translateY(18px) scale(1.12); }
 }
 
 @keyframes blob-float-3 {
-  0%,
-  100% {
-    transform: translateX(var(--tx)) translateY(120px) scale(1);
-    opacity: 0.65;
-  }
-  50% {
-    transform: translateX(calc(var(--tx) + 22px)) translateY(88px) scale(1.1);
-    opacity: 0.55;
-  }
+  0%,100% { transform: translateX(var(--tx)) translateY(120px) scale(1); }
+  50%     { transform: translateX(calc(var(--tx) + 22px)) translateY(88px) scale(1.1); }
 }
 
-/* Deforming organic shape */
-@keyframes blob-morph {
-  0% {
-    border-radius: 58% 42% 63% 37% / 45% 55% 45% 55%;
+/* ===== Mobile performance: lower blur, hide blob-3 ===== */
+@media (max-width: 768px) {
+  .blob {
+    /* Halve the blur — biggest single win on mobile GPUs */
+    filter: blur(28px);
   }
-  33% {
-    border-radius: 44% 56% 39% 61% / 60% 40% 60% 40%;
-  }
-  66% {
-    border-radius: 63% 37% 54% 46% / 37% 63% 37% 63%;
-  }
-  100% {
-    border-radius: 50% 50% 34% 66% / 58% 42% 58% 42%;
-  }
+  .blob-1 { width: 300px; height: 300px; }
+  .blob-2 { width: 300px; height: 300px; }
+  /* Drop the third blob entirely on mobile — saves a full repaint layer */
+  .blob-3 { display: none; }
+  /* Slow down orbit animations — fewer composite frames per second needed */
+  .orbit-1 { animation-duration: 50s; }
+  .orbit-2 { animation-duration: 65s; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .orbit-1,
-  .orbit-2,
-  .orbit-3,
-  .blob-1,
-  .blob-2,
-  .blob-3 {
+  .orbit-1, .orbit-2, .orbit-3,
+  .blob-1, .blob-2, .blob-3 {
     animation: none !important;
     transform: translate(-50%, -50%);
   }

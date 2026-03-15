@@ -48,7 +48,6 @@ const workExperience = [
 const education = {
   degree: "Bachelor of Science in Information Technology",
   school: "Holy Cross of Davao College",
-  certs: ["SWEEP 2023", "Food & Beverage Services NC II", "Front Office Services NC II", "Housekeeping NC II", "Cookery NC II"],
 };
 
 const skillGroups = [
@@ -240,12 +239,7 @@ export default function AboutSection() {
                 <FontAwesomeIcon icon={faGraduationCap} className="text-accent" /> Education
               </h3>
               <p className="text-white text-sm font-semibold">{education.degree}</p>
-              <p className="text-slate-400 text-xs mt-0.5 mb-3">{education.school}</p>
-              <div className="flex flex-wrap gap-1.5">
-                {education.certs.map((c) => (
-                  <span key={c} className="rounded-full border border-slate-700 bg-slate-800/60 px-2.5 py-0.5 text-[10px] text-slate-300">{c}</span>
-                ))}
-              </div>
+              <p className="text-slate-400 text-xs mt-0.5">{education.school}</p>
             </article>
           </div>
 

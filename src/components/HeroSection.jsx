@@ -36,7 +36,7 @@ function DevIllustration() {
           <div className="pl-8"><span className="text-orange-300">&quot;Laravel&quot;</span><span className="text-white">,</span> <span className="text-orange-300">&quot;Vue.js&quot;</span><span className="text-white">,</span></div>
           <div className="pl-8"><span className="text-orange-300">&quot;PHP&quot;</span><span className="text-white">,</span> <span className="text-orange-300">&quot;MySQL&quot;</span></div>
           <div className="pl-4"><span className="text-yellow-400">]</span><span className="text-white">,</span></div>
-          <div className="pl-4"><span className="text-green-400">location</span><span className="text-white">:</span> <span className="text-orange-300">&quot;Davao City, PH&quot;</span><span className="text-white">,</span></div>
+          <div className="pl-4"><span className="text-green-400">location</span><span className="text-white">:</span> <span className="text-orange-300">&quot;Philippines&quot;</span><span className="text-white">,</span></div>
           <div className="pl-4"><span className="text-green-400">available</span><span className="text-white">:</span> <span className="text-purple-400">true</span></div>
           <div><span className="text-yellow-400">{"}"}</span><span className="text-white">;</span></div>
           <div className="flex items-center gap-1 mt-2">

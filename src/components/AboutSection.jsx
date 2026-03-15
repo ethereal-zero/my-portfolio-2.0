@@ -1,188 +1,339 @@
-import React from "react";
-import { NavLink } from 'react-router-dom';
+import React, { useEffect, useRef } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faBriefcase,
+  faDownload,
+  faArrowRight,
+  faGraduationCap,
+  faBullseye,
+} from "@fortawesome/free-solid-svg-icons";
 
-const aboutContent = {
-  headline: "About",
-  subtitle: "A quick snapshot of who I am, what I’ve worked on, and what I build with.",
-  introTitle: "General Information",
-  introDescription:
-    "Hi, I’m Kenneth Candia, a full-stack developer with hands-on experience building production-ready web applications, admin systems, and media-driven platforms. I’ve worked on real-world projects ranging from streaming platforms and business dashboards to scalable web solutions. I focus on clean user experiences, reliable backends, and systems that are built to scale.",
-  focusTitle: "What I Focus On",
-  focusDescription:
-    "I enjoy building systems that balance usability, performance, and scalability. My approach is to keep code maintainable, interfaces intuitive, and integrations reliable—so the product stays stable as it grows.",
-};
+const CV_URL =
+  "https://docs.google.com/document/d/1eTkUFzqG1-aEnrIzEMl5FZczfqo8HToZ/edit?usp=sharing&ouid=117003138271770141554&rtpof=true&sd=true";
+
+function scrollToSection(id) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  const top = el.getBoundingClientRect().top + window.scrollY - 80;
+  window.scrollTo({ top, behavior: "smooth" });
+}
 
 const workExperience = [
   {
-    role: "Work Immersion",
-    company: "Magsige MPC",
-    period: "Early Career Experience",
-    highlight:
-      "Gained early exposure to professional workflows and real-world business processes.",
-  },
-  {
-    role: "Full Stack Developer Intern",
-    company: "PageOne247",
+    role: "Software Developer Intern",
+    company: "Infosoft Studio",
     period: "Feb 2024 – May 2024",
-    highlight:
-      "Built and maintained full-stack features, collaborated with the team, and contributed to production systems.",
+    periodColor: "bg-cyan-500/20 text-cyan-300 border-cyan-500/30",
+    bullets: [
+      "Built full-stack features using Laravel, Vue.js, and Tailwind CSS.",
+      "Developed frontend components and backend logic with DB interactions and API usage.",
+      "Ran SEO and performance audits with Google PageSpeed Insights and Screaming Frog.",
+      "Assisted with server maintenance, backups, and troubleshooting.",
+    ],
   },
   {
-    role: "Junior Full Stack Developer",
+    role: "Full-Stack Developer",
     company: "PageOne247",
-    period: "2024 – Present",
-    highlight:
-      "Build and maintain production web applications, integrate third-party services, and improve performance and usability.",
+    period: "July 2024 – Present",
+    periodColor: "bg-emerald-500/20 text-emerald-300 border-emerald-500/30",
+    bullets: [
+      "Develop and maintain full-stack web apps using Laravel, Vue.js, Tailwind CSS, and MySQL.",
+      "Build and integrate RESTful APIs — auth, validation, transactions, and payment gateways.",
+      "Manage deployment and server environments (Linux, SSL, DNS, name servers).",
+      "Maintain legacy systems including refactoring, bug fixes, and technical support.",
+    ],
   },
 ];
 
-const techStack = [
-  "React",
-  "Vue",
-  "Laravel",
-  "TailwindCSS",
-  "JavaScript",
-  "PHP",
-  "Supabase",
-  "MySQL",
-  "REST APIs",
-  "Vimeo",
-  "DigitalOcean Spaces",
-  "Docker",
-  "Git",
-  "Figma",
+const education = {
+  degree: "Bachelor of Science in Information Technology",
+  school: "Holy Cross of Davao College",
+  certs: ["SWEEP 2023", "Food & Beverage Services NC II", "Front Office Services NC II", "Housekeeping NC II", "Cookery NC II"],
+};
+
+const skillGroups = [
+  {
+    label: "Languages & Frameworks",
+    color: "text-cyan-300",
+    bar: "bg-cyan-500",
+    items: [
+      { name: "PHP (Laravel)", level: 90 },
+      { name: "JavaScript / Vue.js", level: 88 },
+      { name: "HTML5 / CSS3 / Tailwind", level: 92 },
+    ],
+  },
+  {
+    label: "Backend & APIs",
+    color: "text-violet-300",
+    bar: "bg-violet-500",
+    items: [
+      { name: "RESTful APIs", level: 88 },
+      { name: "Authentication & Transactions", level: 85 },
+      { name: "Payment Integrations", level: 80 },
+      { name: "MySQL & Data Modeling", level: 85 },
+    ],
+  },
+  {
+    label: "DevOps & Servers",
+    color: "text-orange-300",
+    bar: "bg-orange-500",
+    items: [
+      { name: "Linux (Ubuntu/WSL)", level: 78 },
+      { name: "SSL / DNS / Deployment", level: 80 },
+      { name: "Docker", level: 72 },
+      { name: "Git & GitHub", level: 90 },
+    ],
+  },
+  {
+    label: "Tools & Others",
+    color: "text-pink-300",
+    bar: "bg-pink-500",
+    items: [
+      { name: "Figma", level: 75 },
+      { name: "Google PageSpeed / Screaming Frog", level: 80 },
+      { name: "WordPress", level: 65 },
+    ],
+  },
 ];
 
-  const handleOpenCV = () => {
-    window.open(
-      "https://docs.google.com/document/d/1eTkUFzqG1-aEnrIzEMl5FZczfqo8HToZ/edit?usp=sharing&ouid=117003138271770141554&rtpof=true&sd=true",
-      "_blank",
-      "noopener,noreferrer"
+const BADGE_STACK = [
+  { name: "PHP", bg: "bg-violet-500/15 border-violet-500/30 text-violet-300" },
+  { name: "Laravel", bg: "bg-red-500/15 border-red-500/30 text-red-300" },
+  { name: "Vue.js", bg: "bg-emerald-500/15 border-emerald-500/30 text-emerald-300" },
+  { name: "JavaScript", bg: "bg-yellow-500/15 border-yellow-500/30 text-yellow-300" },
+  { name: "HTML5", bg: "bg-orange-500/15 border-orange-500/30 text-orange-300" },
+  { name: "CSS3", bg: "bg-blue-500/15 border-blue-500/30 text-blue-300" },
+  { name: "Tailwind CSS", bg: "bg-cyan-500/15 border-cyan-500/30 text-cyan-300" },
+  { name: "MySQL", bg: "bg-orange-500/15 border-orange-500/30 text-orange-300" },
+  { name: "Linux", bg: "bg-slate-500/15 border-slate-500/30 text-slate-300" },
+  { name: "Docker", bg: "bg-blue-500/15 border-blue-500/30 text-blue-300" },
+  { name: "Git & GitHub", bg: "bg-orange-500/15 border-orange-500/30 text-orange-400" },
+  { name: "Figma", bg: "bg-pink-500/15 border-pink-500/30 text-pink-300" },
+  { name: "React", bg: "bg-cyan-500/15 border-cyan-500/30 text-cyan-300" },
+  { name: "Next.js", bg: "bg-slate-500/15 border-slate-500/30 text-slate-200" },
+  { name: "Bootstrap", bg: "bg-violet-500/15 border-violet-500/30 text-violet-300" },
+  { name: "Firebase", bg: "bg-yellow-500/15 border-yellow-500/30 text-yellow-300" },
+  { name: "Java / Android", bg: "bg-red-500/15 border-red-500/30 text-red-300" },
+  { name: "C#", bg: "bg-violet-500/15 border-violet-500/30 text-violet-200" },
+  { name: "WordPress", bg: "bg-blue-500/15 border-blue-500/30 text-blue-300" },
+  { name: "Supabase", bg: "bg-emerald-500/15 border-emerald-500/30 text-emerald-300" },
+];
+
+function SkillBar({ name, level, barColor, staggerDelay }) {
+  const wrapRef = useRef(null);
+  const barRef = useRef(null);
+  const countRef = useRef(null);
+  const triggered = useRef(false);
+
+  useEffect(() => {
+    const el = wrapRef.current;
+    if (!el) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting || triggered.current) return;
+        triggered.current = true;
+        observer.disconnect();
+
+        const baseDelay = staggerDelay || 0;
+
+        // Animate the bar width
+        setTimeout(() => {
+          if (barRef.current) {
+            barRef.current.style.width = `${level}%`;
+          }
+        }, baseDelay);
+
+        // Animate the counter number 0 → level
+        let start = null;
+        const duration = 900;
+        const step = (ts) => {
+          if (!start) start = ts + baseDelay;
+          const elapsed = ts - start;
+          if (elapsed < 0) { requestAnimationFrame(step); return; }
+          const progress = Math.min(elapsed / duration, 1);
+          // ease-out cubic
+          const eased = 1 - Math.pow(1 - progress, 3);
+          const current = Math.round(eased * level);
+          if (countRef.current) countRef.current.textContent = `${current}%`;
+          if (progress < 1) requestAnimationFrame(step);
+        };
+        requestAnimationFrame(step);
+      },
+      { threshold: 0.4 }
     );
-  };
 
-export default function AboutPage() {
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [level, staggerDelay]);
+
   return (
-    <section className="w-full px-6 py-6 text-slate-100">
-      {/* Header */}
-      <div className="mb-6 flex items-start justify-between gap-4">
-        <div>
-          <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">
-            {aboutContent.headline}
-          </h1>
-          <p className="mt-2 max-w-4xl text-sm leading-relaxed text-slate-300 sm:text-base">
-            {aboutContent.subtitle}
-          </p>
-        </div>
+    <div ref={wrapRef} className="mb-4">
+      <div className="flex justify-between mb-1.5">
+        <span className="text-xs text-slate-300">{name}</span>
+        <span ref={countRef} className="text-xs font-mono text-slate-400">0%</span>
       </div>
-
-      {/* Intro + Focus */}
-      <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
-        <article className="overflow-hidden rounded-xl border border-slate-800 bg-slate-900/60 shadow-lg">
-          <div className="p-6">
-            <h2 className="text-xl font-semibold leading-tight sm:text-2xl">
-              {aboutContent.introTitle}
-            </h2>
-            <p className="mt-3 text-sm leading-relaxed text-slate-300 sm:text-base">
-              {aboutContent.introDescription}
-            </p>
-          </div>
-        </article>
-
-        <article className="overflow-hidden rounded-xl border border-slate-800 bg-slate-900/60 shadow-lg">
-          <div className="p-6">
-            <h2 className="text-xl font-semibold leading-tight sm:text-2xl">
-              {aboutContent.focusTitle}
-            </h2>
-            <p className="mt-3 text-sm leading-relaxed text-slate-300 sm:text-base">
-              {aboutContent.focusDescription}
-            </p>
-          </div>
-        </article>
+      <div className="h-1.5 w-full rounded-full bg-slate-700/60 overflow-hidden">
+        <div
+          ref={barRef}
+          className={`h-full rounded-full ${barColor}`}
+          style={{
+            width: "0%",
+            transition: `width 900ms cubic-bezier(0.25, 1, 0.5, 1) ${staggerDelay || 0}ms`,
+          }}
+        />
       </div>
+    </div>
+  );
+}
 
-      {/* Work Experience */}
-      <div className="mt-10">
-        <div className="mb-5">
-          <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">
-            Work Experience
-          </h2>
-          <p className="mt-2 max-w-4xl text-sm leading-relaxed text-slate-300 sm:text-base">
-            Roles I’ve taken and the kind of impact I aim to deliver.
-          </p>
-        </div>
+export default function AboutSection() {
+  const sectionRef = useRef(null);
 
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {workExperience.map((w) => (
-            <article
-              key={`${w.role}-${w.company}`}
-              className="overflow-hidden rounded-xl border border-slate-800 bg-slate-900/60 shadow-lg"
-            >
-              <div className="p-6">
-                <h3 className="text-lg font-semibold leading-tight sm:text-xl">
-                  {w.role}
-                </h3>
-                <p className="mt-1 text-sm text-slate-300 sm:text-base">{w.company}</p>
+  useEffect(() => {
+    const section = sectionRef.current;
+    if (!section) return;
+    const observer = new IntersectionObserver(
+      (entries) =>
+        entries.forEach((e) => {
+          if (e.isIntersecting) { e.target.classList.add("is-visible"); observer.unobserve(e.target); }
+        }),
+      { threshold: 0.05 }
+    );
+    section.querySelectorAll(".fade-in").forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
+  }, []);
 
-                <div className="mt-4 flex items-center gap-3">
-                  <span className="text-xs text-slate-400 sm:text-sm">Period</span>
-                  <code className="rounded-lg bg-slate-800/70 px-3 py-2 text-xs text-slate-200 sm:text-sm">
-                    {w.period}
-                  </code>
-                </div>
+  return (
+    <>
+      <style>{`
+        .fade-in { opacity:0; transform:translateY(26px); transition:opacity 0.6s ease,transform 0.6s ease; }
+        .fade-in.is-visible { opacity:1; transform:translateY(0); }
+      `}</style>
 
-                <p className="mt-4 text-sm leading-relaxed text-slate-300 sm:text-base">
-                  {w.highlight}
-                </p>
+      <section ref={sectionRef} className="w-full px-4 py-16 text-slate-100">
+        <div className="max-w-5xl mx-auto">
+
+          {/* ── Heading ── */}
+          <div className="fade-in mb-12">
+            <span className="inline-flex rounded-full border border-violet-400/30 bg-violet-500/10 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-violet-300 mb-3">
+              About Me
+            </span>
+            <h2 className="text-3xl font-bold text-white sm:text-4xl">Kenneth I. Candia</h2>
+            <p className="mt-1.5 text-slate-400 text-sm">Full-Stack Developer · Davao City · kenchicken0118@gmail.com</p>
+          </div>
+
+          {/* ── Objective + Education ── */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 mb-14">
+            <article className="fade-in rounded-2xl border border-slate-700/50 bg-slate-900/70 p-6" style={{ transitionDelay: "0.05s" }}>
+              <h3 className="flex items-center gap-2 text-xs font-semibold text-slate-400 uppercase tracking-widest mb-3">
+                <FontAwesomeIcon icon={faBullseye} className="text-accent" /> Objective
+              </h3>
+              <p className="text-sm leading-relaxed text-slate-300">
+                To obtain a challenging role that allows me to utilize my skills, grow professionally, and add value
+                through dedication and continuous improvement.
+              </p>
+            </article>
+
+            <article className="fade-in rounded-2xl border border-slate-700/50 bg-slate-900/70 p-6" style={{ transitionDelay: "0.1s" }}>
+              <h3 className="flex items-center gap-2 text-xs font-semibold text-slate-400 uppercase tracking-widest mb-3">
+                <FontAwesomeIcon icon={faGraduationCap} className="text-accent" /> Education
+              </h3>
+              <p className="text-white text-sm font-semibold">{education.degree}</p>
+              <p className="text-slate-400 text-xs mt-0.5 mb-3">{education.school}</p>
+              <div className="flex flex-wrap gap-1.5">
+                {education.certs.map((c) => (
+                  <span key={c} className="rounded-full border border-slate-700 bg-slate-800/60 px-2.5 py-0.5 text-[10px] text-slate-300">{c}</span>
+                ))}
               </div>
             </article>
-          ))}
-        </div>
-      </div>
+          </div>
 
-      {/* Tech Stack */}
-      <div className="mt-10">
-        <div className="mb-5">
-          <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">
-            Tech Stack
-          </h2>
-          <p className="mt-2 max-w-4xl text-sm leading-relaxed text-slate-300 sm:text-base">
-            Tools and technologies I commonly use for building and shipping web apps.
-          </p>
-        </div>
+          {/* ── Work Experience ── */}
+          <div className="fade-in mb-6" style={{ transitionDelay: "0.12s" }}>
+            <h3 className="flex items-center gap-2 text-lg font-bold text-white">
+              <FontAwesomeIcon icon={faBriefcase} className="text-accent text-sm" />
+              Work Experience
+            </h3>
+            <p className="text-slate-500 text-xs mt-1">Roles held at PageOne247.</p>
+          </div>
 
-        <article className="overflow-hidden rounded-xl border border-slate-800 bg-slate-900/60 shadow-lg">
-          <div className="p-6">
-            <div className="flex flex-wrap gap-2.5">
-              {techStack.map((t) => (
-                <span
-                  key={t}
-                  className="rounded-full border border-slate-700 bg-black/30 px-3 py-1.5 text-xs font-medium text-slate-200 backdrop-blur sm:px-4 sm:py-2 sm:text-sm"
-                >
-                  {t}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-16">
+            {workExperience.map((w, i) => (
+              <article
+                key={w.role}
+                className="fade-in rounded-2xl border border-slate-700/50 bg-slate-900/70 p-6"
+                style={{ transitionDelay: `${0.15 + i * 0.08}s` }}
+              >
+                <span className={`inline-block rounded-full border px-2.5 py-0.5 text-[10px] font-semibold mb-3 ${w.periodColor}`}>
+                  {w.period}
+                </span>
+                <h4 className="text-sm font-semibold text-white">{w.role}</h4>
+                <p className="text-xs text-accent/80 mb-4">{w.company}</p>
+                <ul className="space-y-2">
+                  {w.bullets.map((b, j) => (
+                    <li key={j} className="flex gap-2 text-xs text-slate-300 leading-relaxed">
+                      <span className="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-accent/60" />
+                      {b}
+                    </li>
+                  ))}
+                </ul>
+              </article>
+            ))}
+          </div>
+
+          {/* ── Skills ── */}
+          <div className="fade-in mb-6" style={{ transitionDelay: "0.22s" }}>
+            <h3 className="text-lg font-bold text-white">Skills</h3>
+            <p className="text-slate-500 text-xs mt-1">Proficiency across core technical areas.</p>
+          </div>
+
+          <div className="fade-in grid grid-cols-1 sm:grid-cols-2 gap-5 mb-14" style={{ transitionDelay: "0.26s" }}>
+            {skillGroups.map((group) => (
+              <div key={group.label} className="rounded-2xl border border-slate-700/50 bg-slate-900/70 p-5">
+                <h4 className={`text-[10px] font-semibold uppercase tracking-widest mb-4 ${group.color}`}>{group.label}</h4>
+                {group.items.map((item, i) => (
+                  <SkillBar key={item.name} name={item.name} level={item.level} barColor={group.bar} staggerDelay={i * 120} />
+                ))}
+              </div>
+            ))}
+          </div>
+
+          {/* ── Full tech stack chips ── */}
+          <div className="fade-in mb-4" style={{ transitionDelay: "0.3s" }}>
+            <h3 className="text-lg font-bold text-white">Full Tech Stack</h3>
+            <p className="text-slate-500 text-xs mt-1">Every technology across all projects.</p>
+          </div>
+
+          <div className="fade-in rounded-2xl border border-slate-700/50 bg-slate-900/70 p-6" style={{ transitionDelay: "0.34s" }}>
+            <div className="flex flex-wrap gap-2">
+              {BADGE_STACK.map((t) => (
+                <span key={t.name} className={`rounded-full border px-3.5 py-1.5 text-xs font-medium ${t.bg}`}>
+                  {t.name}
                 </span>
               ))}
             </div>
-
-            {/* Optional CTA row */}
-            <div className="mt-5 flex flex-wrap items-center gap-3">
-              <NavLink
-                to="/projects"
-                className="rounded-full border border-slate-700 bg-white/5 px-4 py-2 text-xs font-semibold text-slate-100 hover:bg-white/10 transition sm:text-sm"
+            <div className="mt-6 flex flex-wrap gap-3 border-t border-white/5 pt-5">
+              <button
+                type="button"
+                onClick={() => scrollToSection("projects")}
+                className="flex items-center gap-1.5 rounded-full border border-slate-700 bg-white/5 px-4 py-2 text-xs font-semibold text-slate-100 hover:bg-white/10 transition"
               >
-                View Projects
-              </NavLink>
-
-              <span
-                onClick={handleOpenCV}
-                className="rounded-full bg-emerald-500/20 px-4 py-2 text-xs font-semibold text-emerald-300 hover:bg-emerald-500/30 transition sm:text-sm"
+                View Projects <FontAwesomeIcon icon={faArrowRight} />
+              </button>
+              <a
+                href={CV_URL}
+                target="_blank"
+                rel="noreferrer"
+                className="flex items-center gap-1.5 rounded-full bg-emerald-500/20 px-4 py-2 text-xs font-semibold text-emerald-300 hover:bg-emerald-500/30 transition"
               >
-                Download CV
-              </span>
+                <FontAwesomeIcon icon={faDownload} /> Download CV
+              </a>
             </div>
           </div>
-        </article>
-      </div>
-    </section>
+
+        </div>
+      </section>
+    </>
   );
 }

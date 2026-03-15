@@ -1,7 +1,6 @@
 import React, { useMemo, useState, useRef, useEffect, useCallback } from "react";
 import gsap from "gsap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faImage } from "@fortawesome/free-solid-svg-icons";
 import ImageSlider from "./ui/ImageSlider";
 
 const FALLBACK_IMG = "/placeholder-img.png";
@@ -133,16 +132,7 @@ function DetailText({ project, index, total }) {
 }
 
 function DetailImages({ project }) {
-  const hasImages = Array.isArray(project.images) && project.images.length > 0;
-  if (hasImages) {
-    return <ImageSlider images={project.images} fit="cover" />;
-  }
-  return (
-    <div className="flex h-full min-h-[180px] flex-col items-center justify-center rounded-xl border border-dashed border-slate-700 bg-slate-800/40 gap-3">
-      <FontAwesomeIcon icon={faImage} className="text-4xl text-slate-600" />
-      <span className="text-xs text-slate-500">No preview available</span>
-    </div>
-  );
+  return <ImageSlider images={project.images || []} fit="cover" />;
 }
 
 export default function ProjectSection() {
@@ -296,7 +286,7 @@ export default function ProjectSection() {
       `}</style>
 
       <section className="w-full py-16 text-slate-100">
-        <div className="max-w-5xl mx-auto">
+        <div className="max-w-6xl mx-auto">
 
           {/* ── Section header ── */}
           <div ref={headerRef} className="proj-fade px-4 mb-10">
@@ -309,112 +299,118 @@ export default function ProjectSection() {
             </p>
           </div>
 
-          {/* ── Detail panel (above strip) ── */}
-          <div className="px-4 mb-10">
-            <div className="rounded-2xl border border-white/10 bg-slate-900/80 p-6 shadow-2xl backdrop-blur">
-              <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-                <div ref={textRef}>
-                  <DetailText project={active} index={visibleIdx} total={list.length} />
-                </div>
-                <div ref={imagesRef} key={active.id}>
-                  <DetailImages project={active} />
+          {/* ── Unified project card: detail + strip + dots ── */}
+          <div className="px-4">
+            <div className="rounded-2xl border border-white/10 bg-slate-900/80 shadow-2xl backdrop-blur overflow-hidden">
+
+              {/* Detail section */}
+              <div className="p-6 border-b border-white/5">
+                <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+                  <div ref={textRef}>
+                    <DetailText project={active} index={visibleIdx} total={list.length} />
+                  </div>
+                  <div ref={imagesRef} key={active.id}>
+                    <DetailImages project={active} />
+                  </div>
                 </div>
               </div>
-            </div>
-          </div>
 
-          {/* ── Strip carousel ── */}
-          <div className="relative mb-6 rounded-2xl border border-white/10 bg-slate-900/80 backdrop-blur shadow-2xl py-4 px-1 overflow-hidden">
+              {/* Strip carousel */}
+              <div className="relative py-4 px-1">
 
-            {/* Edge fade masks */}
-            <div className="pointer-events-none absolute left-0 top-0 h-full w-40 z-10 strip-edge-l" />
-            <div className="pointer-events-none absolute right-0 top-0 h-full w-40 z-10 strip-edge-r" />
+                {/* Edge fade masks */}
+                <div className="pointer-events-none absolute left-0 top-0 h-full w-40 z-10 strip-edge-l" />
+                <div className="pointer-events-none absolute right-0 top-0 h-full w-40 z-10 strip-edge-r" />
 
-            {/* Prev chevron */}
-            <button
-              type="button"
-              onClick={() => scrollToIdx(Math.max(0, activeIdx - 1))}
-              disabled={activeIdx === 0}
-              aria-label="Previous project"
-              className="strip-chevron absolute left-2 top-1/2 z-20 -translate-y-1/2 transition-opacity duration-200"
-            >
-              <svg width="24" height="44" viewBox="0 0 24 44" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <polyline points="18,4 6,22 18,40" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-            </button>
-
-            {/* Next chevron */}
-            <button
-              type="button"
-              onClick={() => scrollToIdx(Math.min(list.length - 1, activeIdx + 1))}
-              disabled={activeIdx === list.length - 1}
-              aria-label="Next project"
-              className="strip-chevron absolute right-2 top-1/2 z-20 -translate-y-1/2 transition-opacity duration-200"
-            >
-              <svg width="24" height="44" viewBox="0 0 24 44" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <polyline points="6,4 18,22 6,40" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-            </button>
-
-            {/* Scrollable strip */}
-            <div
-              ref={stripRef}
-              className="proj-fade flex gap-4 overflow-x-auto pb-3 strip-hide"
-              style={{
-                scrollSnapType: "x mandatory",
-                WebkitOverflowScrolling: "touch",
-                paddingLeft: "calc(50% - 8rem)",
-                paddingRight: "calc(50% - 8rem)",
-              }}
-            >
-              {list.map((project, i) => (
-                <div
-                  key={project.id}
-                  ref={(el) => (cardRefs.current[i] = el)}
-                  onClick={() => scrollToIdx(i)}
-                  role="button"
-                  tabIndex={0}
-                  onKeyDown={(e) => { if (e.key === "Enter") scrollToIdx(i); }}
-                  className="flex-shrink-0 cursor-pointer rounded-xl border border-slate-700/60 bg-slate-900/80 overflow-hidden"
-                  style={{ scrollSnapAlign: "center", width: "16rem" }}
+                {/* Prev chevron */}
+                <button
+                  type="button"
+                  onClick={() => scrollToIdx(Math.max(0, activeIdx - 1))}
+                  disabled={activeIdx === 0}
+                  aria-label="Previous project"
+                  className="strip-chevron absolute left-2 top-1/2 z-20 -translate-y-1/2 transition-opacity duration-200"
                 >
-                  <div className="relative h-36 bg-slate-800 overflow-hidden">
-                    {/* Shimmer skeleton */}
-                    <div className="absolute inset-0 shimmer-skeleton" />
-                    <img
-                      src={getCover(project.images)}
-                      alt={project.title}
-                      className="h-full w-full object-cover opacity-0 transition-opacity duration-500"
-                      loading="lazy"
-                      onLoad={(e) => { e.currentTarget.classList.remove("opacity-0"); e.currentTarget.nextSibling && (e.currentTarget.nextSibling.style.display = "none"); }}
-                      onError={(e) => { e.currentTarget.src = FALLBACK_IMG; e.currentTarget.classList.remove("opacity-0"); }}
-                    />
-                    <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-                    {i === activeIdx && (
-                      <div className="absolute inset-0 ring-2 ring-inset ring-accent/60 rounded-xl pointer-events-none" />
-                    )}
-                    <span className={`absolute bottom-2 left-2 rounded-full border px-2 py-0.5 text-[9px] font-semibold ${catColor(project.category)}`}>
-                      {project.category}
-                    </span>
-                  </div>
-                  <div className="px-3 py-2.5">
-                    <p className="text-xs font-semibold text-white truncate">{project.title}</p>
-                    <p className="text-[9px] text-slate-400 mt-0.5 truncate">
-                      {project.tags.slice(0, 3).join(" · ")}{project.tags.length > 3 ? ` +${project.tags.length - 3}` : ""}
-                    </p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
+                  <svg width="24" height="44" viewBox="0 0 24 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <polyline points="18,4 6,22 18,40" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                </button>
 
-          {/* ── Dots ── */}
-          <div className="flex justify-center gap-1.5 mt-1">
-            {list.map((_, i) => (
-              <button key={i} type="button" onClick={() => scrollToIdx(i)} aria-label={`Project ${i + 1}`}
-                className={`rounded-full transition-all duration-300 ${i === activeIdx ? "w-5 h-2 bg-accent" : "w-2 h-2 bg-slate-700 hover:bg-slate-500"}`}
-              />
-            ))}
+                {/* Next chevron */}
+                <button
+                  type="button"
+                  onClick={() => scrollToIdx(Math.min(list.length - 1, activeIdx + 1))}
+                  disabled={activeIdx === list.length - 1}
+                  aria-label="Next project"
+                  className="strip-chevron absolute right-2 top-1/2 z-20 -translate-y-1/2 transition-opacity duration-200"
+                >
+                  <svg width="24" height="44" viewBox="0 0 24 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <polyline points="6,4 18,22 6,40" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                </button>
+
+              {/* Dots — float inside the strip, above edge fades */}
+              <div className="absolute bottom-2 left-0 right-0 flex justify-center gap-1.5 z-30 pointer-events-none">
+                <div className="flex gap-1.5 pointer-events-auto">
+                  {list.map((_, i) => (
+                    <button key={i} type="button" onClick={() => scrollToIdx(i)} aria-label={`Project ${i + 1}`}
+                      className={`rounded-full transition-all duration-300 ${i === activeIdx ? "w-5 h-2 bg-accent" : "w-2 h-2 bg-slate-600/80 hover:bg-slate-400"}`}
+                    />
+                  ))}
+                </div>
+              </div>
+
+              {/* Scrollable strip */}
+                <div
+                  ref={stripRef}
+                  className="proj-fade flex gap-4 overflow-x-auto pb-3 strip-hide"
+                  style={{
+                    scrollSnapType: "x mandatory",
+                    WebkitOverflowScrolling: "touch",
+                    paddingLeft: "calc(50% - 8rem)",
+                    paddingRight: "calc(50% - 8rem)",
+                  }}
+                >
+                  {list.map((project, i) => (
+                    <div
+                      key={project.id}
+                      ref={(el) => (cardRefs.current[i] = el)}
+                      onClick={() => scrollToIdx(i)}
+                      role="button"
+                      tabIndex={0}
+                      onKeyDown={(e) => { if (e.key === "Enter") scrollToIdx(i); }}
+                      className="flex-shrink-0 cursor-pointer rounded-xl border border-slate-700/60 bg-slate-800/60 overflow-hidden"
+                      style={{ scrollSnapAlign: "center", width: "16rem" }}
+                    >
+                      <div className="relative h-36 bg-slate-800 overflow-hidden">
+                        <div className="absolute inset-0 shimmer-skeleton" />
+                        <img
+                          src={getCover(project.images)}
+                          alt={project.title}
+                          className="h-full w-full object-cover opacity-0 transition-opacity duration-500"
+                          loading="lazy"
+                          onLoad={(e) => { e.currentTarget.classList.remove("opacity-0"); }}
+                          onError={(e) => { e.currentTarget.src = FALLBACK_IMG; e.currentTarget.classList.remove("opacity-0"); }}
+                        />
+                        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                        {i === activeIdx && (
+                          <div className="absolute inset-0 ring-2 ring-inset ring-accent/60 rounded-xl pointer-events-none" />
+                        )}
+                        <span className={`absolute bottom-2 left-2 rounded-full border px-2 py-0.5 text-[9px] font-semibold ${catColor(project.category)}`}>
+                          {project.category}
+                        </span>
+                      </div>
+                      <div className="px-3 py-2.5">
+                        <p className="text-xs font-semibold text-white truncate">{project.title}</p>
+                        <p className="text-[9px] text-slate-400 mt-0.5 truncate">
+                          {project.tags.slice(0, 3).join(" · ")}{project.tags.length > 3 ? ` +${project.tags.length - 3}` : ""}
+                        </p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+            </div>
           </div>
 
         </div>

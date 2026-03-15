@@ -191,7 +191,7 @@ const ColorThemeEditor = () => {
 
   return (
     <div>
-      <section className="mx-auto max-w-screen-xl">
+      <section className="mx-auto max-w-6xl">
         {/* General Colours */}
         <article className="px-4 pt-4 text-2xl font-black md:text-2xl lg:text-4xl">
           <span className="from-general-primary to-general-secondary bg-gradient-to-r bg-clip-text text-transparent  w-full text-left">

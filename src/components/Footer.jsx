@@ -84,9 +84,9 @@ export default function Footer() {
           </div>
 
           <div>
-            <div className="text-sm font-semibold tracking-wide text-white">Let&apos;s build something</div>
+            <div className="text-sm font-semibold tracking-wide text-white">Let&apos;s work together</div>
             <p className="mt-4 text-sm leading-relaxed text-slate-300">
-              If you want help shipping a feature, integrating a service, or polishing a UI — send me a message.
+              Need a website built, an existing one optimized, or a feature integrated? Let's talk.
             </p>
             <div className="mt-5 flex flex-wrap gap-3">
               <a href={mailto} className="rounded-xl bg-violet-500 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-violet-400">

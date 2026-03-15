@@ -108,7 +108,7 @@ function HeroSection() {
         ref={sectionRef}
         className="w-full min-h-screen relative px-6 py-8 lg:py-12 border-b border-white/10 flex items-center justify-center -mt-20"
       >
-        <div className="w-full mx-auto max-w-5xl">
+        <div className="w-full mx-auto max-w-6xl">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
 
             {/* ── Left: text ── */}
@@ -134,8 +134,9 @@ function HeroSection() {
 
               {/* Description */}
               <p ref={descRef} className="mt-6 max-w-md text-slate-400 text-sm sm:text-base leading-relaxed">
-                PHP · Laravel · Vue.js specialist building production-ready web platforms — from auth and payments to server deployment.
-                Currently shipping at{" "}
+                PHP · Laravel · Vue.js specialist focused on web development and performance optimization —
+                from building scalable apps to fine-tuning every last millisecond.
+                Currently at{" "}
                 <span className="text-white font-medium border-b border-accent/40 pb-px">PageOne247</span>.
               </p>
 

@@ -20,18 +20,6 @@ function scrollToSection(id) {
 
 const workExperience = [
   {
-    role: "Software Developer Intern",
-    company: "Infosoft Studio",
-    period: "Feb 2024 – May 2024",
-    periodColor: "bg-cyan-500/20 text-cyan-300 border-cyan-500/30",
-    bullets: [
-      "Built full-stack features using Laravel, Vue.js, and Tailwind CSS.",
-      "Developed frontend components and backend logic with DB interactions and API usage.",
-      "Ran SEO and performance audits with Google PageSpeed Insights and Screaming Frog.",
-      "Assisted with server maintenance, backups, and troubleshooting.",
-    ],
-  },
-  {
     role: "Full-Stack Developer",
     company: "PageOne247",
     period: "July 2024 – Present",
@@ -41,6 +29,18 @@ const workExperience = [
       "Build and integrate RESTful APIs — auth, validation, transactions, and payment gateways.",
       "Manage deployment and server environments (Linux, SSL, DNS, name servers).",
       "Maintain legacy systems including refactoring, bug fixes, and technical support.",
+    ],
+  },
+  {
+    role: "Software Developer Intern",
+    company: "Infosoft Studio",
+    period: "Feb 2024 – May 2024",
+    periodColor: "bg-cyan-500/20 text-cyan-300 border-cyan-500/30",
+    bullets: [
+      "Built full-stack features using Laravel, Vue.js, and Tailwind CSS.",
+      "Developed frontend components and backend logic with DB interactions and API usage.",
+      "Ran SEO and performance audits with Google PageSpeed Insights and Screaming Frog.",
+      "Assisted with server maintenance, backups, and troubleshooting.",
     ],
   },
 ];
@@ -107,6 +107,8 @@ const BADGE_STACK = [
   { name: "Linux", bg: "bg-slate-500/15 border-slate-500/30 text-slate-300" },
   { name: "Docker", bg: "bg-blue-500/15 border-blue-500/30 text-blue-300" },
   { name: "Git & GitHub", bg: "bg-orange-500/15 border-orange-500/30 text-orange-400" },
+  { name: "Bitbucket", bg: "bg-blue-600/15 border-blue-600/30 text-blue-300" },
+  { name: "GoDaddy", bg: "bg-green-500/15 border-green-500/30 text-green-300" },
   { name: "Figma", bg: "bg-pink-500/15 border-pink-500/30 text-pink-300" },
   { name: "React", bg: "bg-cyan-500/15 border-cyan-500/30 text-cyan-300" },
   { name: "Next.js", bg: "bg-slate-500/15 border-slate-500/30 text-slate-200" },
@@ -136,14 +138,10 @@ function SkillBar({ name, level, barColor, staggerDelay }) {
 
         const baseDelay = staggerDelay || 0;
 
-        // Animate the bar width
         setTimeout(() => {
-          if (barRef.current) {
-            barRef.current.style.width = `${level}%`;
-          }
+          if (barRef.current) barRef.current.style.width = `${level}%`;
         }, baseDelay);
 
-        // Animate the counter number 0 → level
         let start = null;
         const duration = 900;
         const step = (ts) => {
@@ -151,7 +149,6 @@ function SkillBar({ name, level, barColor, staggerDelay }) {
           const elapsed = ts - start;
           if (elapsed < 0) { requestAnimationFrame(step); return; }
           const progress = Math.min(elapsed / duration, 1);
-          // ease-out cubic
           const eased = 1 - Math.pow(1 - progress, 3);
           const current = Math.round(eased * level);
           if (countRef.current) countRef.current.textContent = `${current}%`;
@@ -211,7 +208,7 @@ export default function AboutSection() {
       `}</style>
 
       <section ref={sectionRef} className="w-full px-4 py-16 text-slate-100">
-        <div className="max-w-5xl mx-auto">
+        <div className="max-w-6xl mx-auto">
 
           {/* ── Heading ── */}
           <div className="fade-in mb-12">
@@ -249,7 +246,7 @@ export default function AboutSection() {
               <FontAwesomeIcon icon={faBriefcase} className="text-accent text-sm" />
               Work Experience
             </h3>
-            <p className="text-slate-500 text-xs mt-1">Roles held at PageOne247.</p>
+            <p className="text-slate-500 text-xs mt-1">Professional Experience</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-16">

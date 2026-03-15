@@ -1,6 +1,5 @@
 import React, { useMemo, useState, useRef, useEffect, useCallback } from "react";
 import gsap from "gsap";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import ImageSlider from "./ui/ImageSlider";
 
 const FALLBACK_IMG = "/placeholder-img.png";

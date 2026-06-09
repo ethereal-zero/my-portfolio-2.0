@@ -7,10 +7,12 @@ import HeroSection from "./components/HeroSection";
 import HeroSectionContent from "./components/HeroSectionContent";
 import AboutSection from "./components/AboutSection";
 import ProjectSection from "./components/ProjectSection";
+import { Analytics } from "@vercel/analytics/react"
 
 function App() {
   return (
     <ThemeProvider className="relative">
+      <Analytics />
       <div className="relative min-h-dvh overflow-hidden bg-background/50">
         {/* Animated blob background */}
         <div aria-hidden className="blob-bg pointer-events-none fixed inset-0 overflow-hidden">

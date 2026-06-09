@@ -28,7 +28,7 @@ const PROJECTS = [
     title: "The Final Whistle",
     description: "A dynamic registration platform for youth football competitions. TFW9s celebrates young athletes through a safe, competitive environment, empowering them to learn resilience, teamwork, and sportsmanship.",
     tags: ["Vue.js", "Stripe", "Paypal", "Afterpay", "Laravel"],
-    images: [],
+    images: ["projects/project_tf_1.png","projects/project_tf_2.png","projects/project_tf_3.png","projects/project_tf_4.png","projects/project_tf_5.png"],
     category: "Registration System",
   },
   {

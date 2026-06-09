@@ -7,7 +7,7 @@ const FALLBACK_IMG = "/placeholder-img.png";
 const PROJECTS = [
   {
     id: 1,
-    title: "Project FH",
+    title: "Fight Streaming Platform",
     description: "A secure, scalable sports video platform delivering authorized live and on-demand fight content. Built with Vue and Laravel, powered by Vimeo for live streaming and DigitalOcean Spaces for media storage. Features controlled access, protected content workflows, and stable playback across devices.",
     tags: ["Vue.js", "Laravel", "Vimeo", "Stripe", "Digital Ocean Space"],
     images: ["projects/project_fh_1.png","projects/project_fh_2.png","projects/project_fh_3.png","projects/project_fh_4.png","projects/project_fh_5.png"],
@@ -16,7 +16,7 @@ const PROJECTS = [
   },
   {
     id: 2,
-    title: "Project MP",
+    title: "Muscle Pharm E-commerce",
     description: "A performance-focused e-commerce platform supporting muscle growth goals through high-quality formulations. Features controlled access, consistent delivery, GA4 analytics, and Omnisend email marketing integration.",
     tags: ["Vue.js", "Laravel", "Provesource", "Omnisend", "E-PATH", "GA4 Analytics"],
     images: ["projects/project_mp_1.png","projects/project_mp_2.png","projects/project_mp_3.png","projects/project_mp_4.png","projects/project_mp_5.png"],
@@ -25,24 +25,25 @@ const PROJECTS = [
   },
   {
     id: 3,
-    title: "The Final Whistle",
+    title: "Rugby Registration System",
     description: "A dynamic registration platform for youth football competitions. TFW9s celebrates young athletes through a safe, competitive environment, empowering them to learn resilience, teamwork, and sportsmanship.",
     tags: ["Vue.js", "Stripe", "Paypal", "Afterpay", "Laravel"],
     images: ["projects/project_tf_1.png","projects/project_tf_2.png","projects/project_tf_3.png","projects/project_tf_4.png","projects/project_tf_5.png"],
+    type: "Private Repository",
     category: "Registration System",
   },
   {
     id: 4,
-    title: "Dentabase",
+    title: "Dental Staffing Platform",
     description: "A dental staffing and job-hunting platform connecting practices with qualified professionals. Simple, fast, and stress-free — one unified platform for employers and job seekers in the dental industry.",
     tags: ["Vue.js", "Leaflet", "Stripe", "Laravel"],
-    images: [],
+    images: ["projects/project_db_1.png","projects/project_db_2.png","projects/project_db_3.png","projects/project_db_4.png","projects/project_db_5.png"],
     type: "Private Repository",
     category: "Employment",
   },
   {
     id: 5,
-    title: "Scholarly Hub",
+    title: "Class Booking System",
     description: "A booking and scheduling system for academic institutions, streamlining reservations and resource management to reduce administrative friction for staff and students.",
     tags: ["Vue.js", "Stripe", "Laravel"],
     images: [],

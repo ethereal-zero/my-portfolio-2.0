@@ -136,8 +136,6 @@ function HeroSection() {
               <p ref={descRef} className="mt-6 max-w-md text-slate-400 text-sm sm:text-base leading-relaxed">
                 PHP · Laravel · Vue.js specialist focused on web development and performance optimization —
                 from building scalable apps to fine-tuning every last millisecond.
-                Currently at{" "}
-                <span className="text-white font-medium border-b border-accent/40 pb-px">PageOne247</span>.
               </p>
 
               {/* Buttons */}

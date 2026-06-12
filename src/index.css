@@ -304,10 +304,3 @@ code {
   .orbit-2 { animation-duration: 65s; }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .orbit-1, .orbit-2, .orbit-3,
-  .blob-1, .blob-2, .blob-3 {
-    animation: none !important;
-    transform: translate(-50%, -50%);
-  }
-}

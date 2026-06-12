@@ -36,7 +36,7 @@ const PROJECTS = [
     id: 4,
     title: "Dental Staffing Platform",
     description: "A dental staffing and job-hunting platform connecting practices with qualified professionals. Simple, fast, and stress-free — one unified platform for employers and job seekers in the dental industry.",
-    tags: ["Vue.js", "Leaflet", "Stripe", "Laravel"],
+    tags: ["Vue.js", "Leaflet", "Stripe", "Laravel", "Socket.IO"],
     images: ["projects/project_db_1.png","projects/project_db_2.png","projects/project_db_3.png","projects/project_db_4.png","projects/project_db_5.png"],
     type: "Private Repository",
     category: "Employment",

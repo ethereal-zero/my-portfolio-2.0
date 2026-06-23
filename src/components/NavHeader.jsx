@@ -36,7 +36,6 @@ export default function NavHeader() {
   useEffect(() => {
     const ctx = gsap.context(() => {
       gsap.from(headerRef.current, {
-        y: -80,
         opacity: 0,
         duration: 0.8,
         ease: "power3.out",

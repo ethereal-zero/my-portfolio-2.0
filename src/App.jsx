@@ -13,7 +13,7 @@ function App() {
   return (
     <ThemeProvider className="relative">
       <Analytics />
-      <div className="relative min-h-dvh overflow-hidden bg-background/50">
+      <div className="relative min-h-dvh bg-background/50">
         {/* Animated blob background */}
         <div aria-hidden className="blob-bg pointer-events-none fixed inset-0 overflow-hidden">
           <div className="orbit orbit-1">
